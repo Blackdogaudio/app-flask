@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="space-y-6">
+  <header>
+    <h1 class="text-3xl font-bold">Browse Public Wishlists</h1>
+    <p class="text-sm text-base-content/70">Discover public lists shared by users.</p>
+  </header>
+
+  {% if lists and lists|length > 0 %}
+  <div class="grid gap-4">
+    {% for lst in lists %}
+    <a href="{{ url_for('user_wishlist', username=lst.username, slug=lst.slug) }}" class="card bg-base-100 shadow hover:shadow-lg transition">
+      <div class="card-body">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="card-title">{{ lst.name }}</span>
+              <span class="badge">{{ lst.count }} items</span>
+            </div>
+            <p class="text-sm text-base-content/70">by {{ lst.username }}</p>
+          </div>
+          <div class="opacity-60">/u/{{ lst.username }}/{{ lst.slug }}</div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="alert">
+    <span>No public wishlists yet.</span>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,347 @@
+{
+  "entries": [
+    {
+      "id": 1,
+      "title": "New Laptop",
+      "description": "Lightweight laptop with at least 16GB RAM and 512GB SSD.",
+      "url": "https://example.com/laptops/model-123",
+      "priority": 1,
+      "added_at": "2025-01-01T12:00:00Z",
+      "purchased": false
+    },
+    {
+      "id": 2,
+      "title": "Noise Cancelling Headphones",
+      "description": "Over-ear, good for working in noisy environments.",
+      "url": "https://example.com/headphones/model-xyz",
+      "priority": 2,
+      "added_at": "2025-01-02T09:30:00Z",
+      "purchased": false
+    },
+    {
+      "id": 3,
+      "title": "Travel Backpack",
+      "description": "Carry-on size, lots of compartments.",
+      "url": "https://example.com/backpacks/model-abc",
+      "priority": 3,
+      "added_at": "2025-01-03T15:45:00Z",
+      "purchased": true
+    }
+  ],
+  "meta": {
+    "next_id": 31,
+    "next_list_id": 5
+  },
+  "users": [
+    {
+      "username": "test",
+      "password_hash": "scrypt:32768:8:1$bDvc64HNw8SqIbdj$6cf10c29a7308a53de12e505df624af6fc8fdbd0aa12edcd6fd85c30d144cc0730ff81b3e6dc9dbc9668284e374b98c3851c25eaec1d364db07bc91332ac08cb",
+      "created_at": "2025-11-17T18:38:02.818715Z"
+    },
+    {
+      "username": "mark",
+      "password_hash": "scrypt:32768:8:1$PMQoSEiRiL3fTccw$90408c74ff34cc5aab8c2d3a38e01939bd5934251173fe55fda15deca30d81cbc38f2c2581664ceb971c2151c095b6f5b82628adc1a9abba94118dd4a2095874",
+      "created_at": "2025-11-17T18:54:07.884413Z"
+    },
+    {
+      "username": "karen",
+      "password_hash": "scrypt:32768:8:1$O82d0Hyz4nvcF7xB$d2b4d82a69e669d0864c6e53be6fa27ea934e5ac466db612e67d54afe275ce9ea79001d8cf1501134b36a544617a38fe8f836f7f2b237b53486d629e7048dc3f",
+      "created_at": "2025-11-17T21:36:58.414431Z"
+    }
+  ],
+  "wishlists": {
+    "test": [
+      {
+        "list_id": 2,
+        "name": "test list",
+        "slug": "test-list",
+        "is_public": false,
+        "created_at": "2025-11-17T18:49:44.445554Z",
+        "items": [
+          {
+            "id": 5,
+            "title": "microphone",
+            "description": "wa44",
+            "url": "https://www.sweetwater.com/store/detail/WA44--warm-audio-wa-44-studio-ribbon-microphone",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-17T18:50:03.126825Z",
+            "link_type": "item"
+          }
+        ]
+      }
+    ],
+    "mark": [
+      {
+        "list_id": 3,
+        "name": "Stuff for XMAS 25",
+        "slug": "default",
+        "is_public": false,
+        "created_at": "2025-11-17T18:54:07.884439Z",
+        "items": [
+          {
+            "id": 6,
+            "title": "Microphone",
+            "description": "WA-44",
+            "url": "https://www.sweetwater.com/store/detail/WA44--warm-audio-wa-44-studio-ribbon-microphone",
+            "priority": 4,
+            "purchased": false,
+            "added_at": "2025-11-17T19:02:07.779940Z",
+            "link_type": "item"
+          },
+          {
+            "id": 7,
+            "title": "Jacket",
+            "description": "leather trucker jacket",
+            "url": "https://www.luckybrand.com/distressed-leather-trucker/149287.html?dwvar_149287_color=010&dwvar_149287_dimension=*N&dwvar_149287_size=L&quantity=1#uuid=b5f63187147aafa00dbf5b69a8",
+            "priority": 5,
+            "purchased": false,
+            "added_at": "2025-11-17T19:10:43.272311Z",
+            "link_type": "item"
+          },
+          {
+            "id": 8,
+            "title": "Record Cartridge",
+            "description": "",
+            "url": "https://www.sweetwater.com/store/detail/ConcordeMBu--ortofon-concorde-music-premium-moving-magnet-cartridge-blue",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-17T19:26:36.031873Z",
+            "link_type": "item"
+          },
+          {
+            "id": 9,
+            "title": "Speakers",
+            "description": "KEF Q1",
+            "url": "https://www.crutchfield.com/p_991Q1MWA/KEF-Q1-Meta-Walnut.html",
+            "priority": 5,
+            "purchased": false,
+            "added_at": "2025-11-17T21:35:24.695999Z",
+            "link_type": "item"
+          },
+          {
+            "id": 10,
+            "title": "Speakers",
+            "description": "In walnut",
+            "url": "https://www.bestbuy.com/product/kef-q-concerto-meta-bookshelf-speakers-pair-black/JXXYVQ87RL",
+            "priority": 2,
+            "purchased": false,
+            "added_at": "2025-11-17T21:59:31.294883Z",
+            "link_type": "item"
+          },
+          {
+            "id": 11,
+            "title": "Beagle Board",
+            "description": "There are many distributors",
+            "url": "https://www.beagleboard.org/boards/beaglev-fire",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-17T22:22:31.525870Z",
+            "link_type": "item"
+          },
+          {
+            "id": 12,
+            "title": "Poster",
+            "description": "Framed?",
+            "url": "https://www.architeg-prints.com/product/led-zeppelin-zeppelin-iv-music-album-poster",
+            "priority": 2,
+            "purchased": false,
+            "added_at": "2025-11-18T02:22:48.078133Z",
+            "link_type": "item"
+          },
+          {
+            "id": 13,
+            "title": "JV Jacket",
+            "description": "",
+            "url": "https://www.johnvarvatos.com/outlet/marco-jacket/L1630S25-Y1642-001.html",
+            "priority": 2,
+            "purchased": false,
+            "added_at": "2025-11-18T12:57:32.551732Z",
+            "link_type": "item"
+          },
+          {
+            "id": 14,
+            "title": "Sneakers",
+            "description": "Black? or grey?.   9.5",
+            "url": "https://www.johnvarvatos.com/shoes/sneakers/vulc-laceless-low-top/F4198Y3-Y1848-024.html",
+            "priority": 2,
+            "purchased": false,
+            "added_at": "2025-11-18T13:19:32.914545Z",
+            "link_type": "item"
+          },
+          {
+            "id": 28,
+            "title": "Speakers",
+            "description": "",
+            "url": "https://radiantacoustics.com/en-us/products/clarity-4-2",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-19T13:40:03.660672Z",
+            "link_type": "item"
+          }
+        ]
+      }
+    ],
+    "karen": [
+      {
+        "list_id": 4,
+        "name": "My Wishlist",
+        "slug": "default",
+        "is_public": true,
+        "created_at": "2025-11-17T21:36:58.414449Z",
+        "items": [
+          {
+            "id": 15,
+            "title": "Necklace",
+            "description": "",
+            "url": "https://www.ruelala.com/boutique/product/264354/293079726/?dsi=BTQ--c34c5e90-4138-4537-a5aa-5035a7b33dc8&lsi=8e65df7f-74a7-42e6-b218-83e8cb1fabc5&pos=19&fromPlp=true",
+            "priority": 2,
+            "purchased": false,
+            "added_at": "2025-11-18T13:21:53.252863Z",
+            "link_type": "item"
+          },
+          {
+            "id": 16,
+            "title": "Computer Bag",
+            "description": "Black color, large",
+            "url": "https://www.bloomingdales.com/shop/product/longchamp-le-pliage-original-large-nylon-tote-bag?ID=641314&CategoryID=1005786&swatchColor=Black/Gold#PAGEINDEX/2",
+            "priority": 1,
+            "purchased": false,
+            "added_at": "2025-11-18T13:22:30.000258Z",
+            "link_type": "wishlist"
+          },
+          {
+            "id": 17,
+            "title": "Sneakers",
+            "description": "Size 38",
+            "url": "https://www.bloomingdales.com/shop/product/veja-womens-campo-sneakers?ID=5724863&CategoryID=1005786#PAGEINDEX/2",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-18T13:22:54.662825Z",
+            "link_type": "wishlist"
+          },
+          {
+            "id": 18,
+            "title": "Bracelet",
+            "description": "",
+            "url": "https://www.bloomingdales.com/shop/product/anabel-aram-farrier-18k-yellow-gold-plated-or-sterling-silver-wide-hinged-bangle-bracelet?ID=5402402&CategoryID=3376&swatchColor=Silver",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-18T13:23:39.581416Z",
+            "link_type": "wishlist"
+          },
+          {
+            "id": 19,
+            "title": "Jewelry Box",
+            "description": "Light Burlwood",
+            "url": "https://www.potterybarn.com/products/stella-jewelry-box/?_cn_psugg_q=jewlery",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-18T13:24:08.545327Z",
+            "link_type": "wishlist"
+          },
+          {
+            "id": 20,
+            "title": "House Shoes",
+            "description": "Size 7",
+            "url": "https://www.quince.com/unisex/women-s-suede-clog-mule?color=cafe&tracker=landingPage__flat_product_list&size=7",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-18T13:24:46.521564Z",
+            "link_type": "wishlist"
+          },
+          {
+            "id": 21,
+            "title": "Boots",
+            "description": "37",
+            "url": "https://zadig-et-voltaire.com/us/en/p/SWCT02054011/tyler-stars-black-leather-boots",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-18T13:25:36.197779Z",
+            "link_type": "wishlist"
+          },
+          {
+            "id": 22,
+            "title": "Makeup",
+            "description": "Color - Fair",
+            "url": "https://www.jonesroadbeauty.com/products/just-enough-tinted-moisturizer?variant=44605505274006",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-18T13:26:12.860451Z",
+            "link_type": "wishlist"
+          },
+          {
+            "id": 23,
+            "title": "Makeup",
+            "description": "Tan",
+            "url": "https://www.jonesroadbeauty.com/products/the-bronzer?variant=42347618107542",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-18T13:26:40.419361Z",
+            "link_type": "wishlist"
+          },
+          {
+            "id": 24,
+            "title": "Makeup Brush",
+            "description": "",
+            "url": "https://www.jonesroadbeauty.com/products/eye-blending-brush?country=US",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-18T13:27:08.924696Z",
+            "link_type": "wishlist"
+          },
+          {
+            "id": 25,
+            "title": "Makeup tray",
+            "description": "Large one",
+            "url": "https://www.anthropologie.com/shop/the-gleaming-primrose-vanity-tray?color=070&type=STANDARD&size=L&quantity=1",
+            "priority": 2,
+            "purchased": false,
+            "added_at": "2025-11-18T13:27:37.162304Z",
+            "link_type": "wishlist"
+          },
+          {
+            "id": 26,
+            "title": "Sweater",
+            "description": "Size Medium",
+            "url": "https://www.allsaints.com/us/women/knitwear/rock-wool-sweater/US5063320682283.html",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-18T13:54:27.820750Z",
+            "link_type": "wishlist"
+          },
+          {
+            "id": 27,
+            "title": "Bracelet",
+            "description": "Silver",
+            "url": "https://www.quince.com/women/sophia-bold-bangle?color=sterling-silver&gender=women&tracker=collection_page__%2Fwomen%2Fjewelry%2Fbracelets-all__All%20Products__21",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-18T14:00:07.997276Z",
+            "link_type": "wishlist"
+          },
+          {
+            "id": 29,
+            "title": "Sweater",
+            "description": "Medium",
+            "url": "https://www.madewell.com/p/womens/clothing/sweaters/novelty-sweaters/mixed-stripe-pullover-sweater/NS668/?ccode=SR8206",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-20T13:25:50.269103Z",
+            "link_type": "wishlist"
+          },
+          {
+            "id": 30,
+            "title": "bracelet",
+            "description": "Size medium",
+            "url": "https://www.nordstrom.com/s/david-yurman-dy-madison-sterling-silver-chain-bracelet-5-5mm/6879378?origin=category-personalizedsort&breadcrumb=Home%2FHoliday%20Gifts%2FGifts%20by%20Recipient%2FGifts%20for%20Her&color=040",
+            "priority": 3,
+            "purchased": false,
+            "added_at": "2025-11-20T14:08:30.293838Z",
+            "link_type": "wishlist"
+          }
+        ]
+      }
+    ]
+  }
+}

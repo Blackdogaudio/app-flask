@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="space-y-6">
+  <header class="flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-bold">{{ username }}'s Wishlists</h1>
+      {% if not is_owner %}
+        <p class="text-sm text-base-content/70">Showing public lists only.</p>
+      {% endif %}
+    </div>
+    {% if is_owner %}
+    <form method="post" action="{{ url_for('create_list', username=username) }}" class="flex items-end gap-2">
+      <div>
+        <label class="label"><span class="label-text">New list name</span></label>
+        <input name="name" class="input input-bordered" placeholder="e.g., Family, Kids, Work" />
+      </div>
+      <button class="btn btn-primary" type="submit">Create</button>
+    </form>
+    {% endif %}
+  </header>
+
+  {% if lists %}
+  <div class="grid gap-4">
+    {% for lst in lists %}
+    <div class="card bg-base-100 shadow">
+      <div class="card-body">
+        <div class="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <a href="{{ url_for('user_wishlist', username=username, slug=lst.slug) }}" class="card-title">
+                {{ lst.name }}
+              </a>
+              <span class="badge {{ 'badge-success' if lst.is_public else '' }}">{{ 'Public' if lst.is_public else 'Private' }}</span>
+              <span class="badge">{{ (lst.get('items', {}) | length) }} items</span>
+            </div>
+            <p class="text-sm text-base-content/70">/u/{{ username }}/{{ lst.slug }}</p>
+          </div>
+          <div class="card-actions">
+            {% if is_owner %}
+              <form method="post" action="{{ url_for('set_visibility', username=username, slug=lst.slug) }}" class="flex items-center gap-2">
+                <label class="label cursor-pointer">
+                  <span class="label-text mr-2">Public</span>
+                  <input type="checkbox" name="is_public" class="toggle" {% if lst.is_public %}checked{% endif %} onchange="this.form.submit()" />
+                </label>
+              </form>
+              <form method="post" action="{{ url_for('rename_list', username=username, slug=lst.slug) }}" class="flex items-end gap-2">
+                <input name="name" value="{{ lst.name }}" class="input input-bordered" />
+                <button class="btn btn-sm" type="submit">Rename</button>
+              </form>
+              <form method="post" action="{{ url_for('delete_list', username=username, slug=lst.slug) }}" onsubmit="return confirm('Delete list {{ lst.name }}?');">
+                <button class="btn btn-sm btn-error" type="submit">Delete</button>
+              </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="alert">
+    <span>No lists yet{% if is_owner %}. Create your first one above{% endif %}.</span>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

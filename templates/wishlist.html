@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="space-y-6">
+  <header class="flex items-start justify-between gap-4">
+    <div>
+      <div class="flex items-center gap-3">
+        <h1 class="text-3xl font-bold">{{ username }} · {{ list_name }}</h1>
+        <span class="badge {{ 'badge-success' if is_public else '' }}">{{ 'Public' if is_public else 'Private' }}</span>
+      </div>
+      <div class="mt-1 text-sm text-base-content/70">
+        <a class="link" href="{{ url_for('user_lists', username=username) }}">Back to lists</a>
+      </div>
+    </div>
+    <div class="flex gap-3 items-start">
+      {% if is_owner %}
+      <form method="post" action="{{ url_for('set_visibility', username=username, slug=slug) }}" class="flex items-center gap-2">
+        <label class="label cursor-pointer">
+          <span class="label-text mr-2">Public</span>
+          <input type="checkbox" name="is_public" class="toggle" {% if is_public %}checked{% endif %} onchange="this.form.submit()" />
+        </label>
+      </form>
+      {% endif %}
+    </div>
+  </header>
+
+  {% if is_owner %}
+  <form method="post" action="{{ url_for('add_item', username=username, slug=slug) }}" class="flex flex-wrap gap-2 items-end">
+    <div>
+      <label class="label"><span class="label-text">Title</span></label>
+      <input name="title" class="input input-bordered" placeholder="Gift idea" required />
+    </div>
+    <div>
+      <label class="label"><span class="label-text">URL</span></label>
+      <input name="url" class="input input-bordered" placeholder="https://..." />
+    </div>
+    <div>
+      <label class="label"><span class="label-text">Link type</span></label>
+      <select name="link_type" class="select select-bordered">
+        <option value="item" selected>Item</option>
+        <option value="wishlist">Wishlist</option>
+      </select>
+    </div>
+    <div class="w-48">
+      <label class="label"><span class="label-text">Description</span></label>
+      <input name="description" class="input input-bordered" placeholder="Notes" />
+    </div>
+    <div>
+      <label class="label"><span class="label-text">Priority</span></label>
+      <select name="priority" class="select select-bordered">
+        <option value="1">1 (highest)</option>
+        <option value="2">2</option>
+        <option value="3" selected>3</option>
+        <option value="4">4</option>
+        <option value="5">5 (lowest)</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Add</button>
+  </form>
+  {% endif %}
+
+  <div class="grid gap-3">
+    {% if items %}
+      {% for item in items %}
+      <div class="card bg-base-100 shadow">
+        <div class="card-body">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex items-start gap-4">
+              {% if item.url %}
+                <a href="{{ item.url }}" target="_blank" rel="noopener"
+                   class="block shrink-0">
+                  {% if item.link_type == 'wishlist' %}
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain={{ item.url|domain }}"
+                         alt="{{ item.url|domain }} favicon"
+                         class="w-12 h-12 rounded-md border border-base-300" />
+                  {% elif item.url is image_url %}
+                    <img src="{{ item.url }}" alt="{{ item.title }} thumbnail"
+                         class="w-24 h-24 object-cover rounded-md border border-base-300" />
+                  {% else %}
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain={{ item.url|domain }}"
+                         alt="{{ item.url|domain }} favicon"
+                         class="w-12 h-12 rounded-md border border-base-300" />
+                  {% endif %}
+                </a>
+              {% endif %}
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="card-title {% if not is_owner and item.purchased %}line-through opacity-60{% endif %}">{{ item.title }}</h3>
+                  <span class="badge">P{{ item.priority }}</span>
+                  {% if item.link_type == 'wishlist' %}
+                    <span class="badge badge-info">Wishlist</span>
+                  {% else %}
+                    <span class="badge">Item</span>
+                  {% endif %}
+                  {% if not is_owner and item.purchased %}<span class="badge badge-success">Purchased</span>{% endif %}
+                </div>
+                {% if item.description %}
+                <p class="text-sm text-base-content/70">{{ item.description }}</p>
+                {% endif %}
+                {% if item.url %}
+                <a class="link" href="{{ item.url }}" target="_blank" rel="noopener">{{ 'View wishlist' if item.link_type == 'wishlist' else 'View link' }}</a>
+                {% endif %}
+              </div>
+              </div>
+            <div class="card-actions">
+              {% if is_owner %}
+                <a class="btn btn-sm" href="{{ url_for('edit_item', username=username, slug=slug, item_id=item.id) }}">Edit</a>
+                <form method="post" action="{{ url_for('delete_item', username=username, slug=slug, item_id=item.id) }}" onsubmit="return confirm('Remove this item?');">
+                  <button class="btn btn-sm btn-error" type="submit">Delete</button>
+                </form>
+              {% else %}
+                <form method="post" action="{{ url_for('public_toggle', username=username, slug=slug, item_id=item.id) }}" class="flex items-center gap-2">
+                  <label class="label cursor-pointer">
+                    <span class="label-text mr-2">Purchased</span>
+                    <input type="checkbox" name="purchased" class="checkbox" {% if item.purchased %}checked{% endif %} onchange="this.form.submit()" />
+                  </label>
+                </form>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="alert">
+        <span>No items yet{% if is_owner %}, add your first one above{% endif %}.</span>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

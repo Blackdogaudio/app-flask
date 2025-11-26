@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="space-y-6">
+  <header>
+    <h1 class="text-3xl font-bold">Edit Item</h1>
+    <p class="text-sm text-base-content/70">Updating item on /u/{{ username }}/{{ slug }}</p>
+  </header>
+
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <form method="post" class="grid gap-4">
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="label"><span class="label-text">Title</span></label>
+            <input name="title" class="input input-bordered w-full" value="{{ item.title }}" required />
+          </div>
+          <div>
+            <label class="label"><span class="label-text">URL</span></label>
+            <input name="url" class="input input-bordered w-full" value="{{ item.url }}" placeholder="https://..." />
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4">
+          <div>
+            <label class="label"><span class="label-text">Link type</span></label>
+            <select name="link_type" class="select select-bordered w-full">
+              <option value="item" {% if item.link_type != 'wishlist' %}selected{% endif %}>Item</option>
+              <option value="wishlist" {% if item.link_type == 'wishlist' %}selected{% endif %}>Wishlist</option>
+            </select>
+          </div>
+          <div>
+            <label class="label"><span class="label-text">Priority</span></label>
+            <select name="priority" class="select select-bordered w-full">
+              {% for p in [1,2,3,4,5] %}
+                <option value="{{ p }}" {% if item.priority == p %}selected{% endif %}>{{ p }}{% if p==1 %} (highest){% elif p==5 %} (lowest){% endif %}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="flex items-end">
+            <label class="label cursor-pointer">
+              <span class="label-text mr-2">Purchased</span>
+              <input type="checkbox" name="purchased" class="toggle" {% if item.purchased %}checked{% endif %} />
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label class="label"><span class="label-text">Description</span></label>
+          <textarea name="description" class="textarea textarea-bordered w-full" rows="3" placeholder="Notes">{{ item.description }}</textarea>
+        </div>
+
+        <div class="card-actions justify-end gap-2">
+          <a class="btn" href="{{ url_for('user_wishlist', username=username, slug=slug) }}">Cancel</a>
+          <button class="btn btn-primary" type="submit">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

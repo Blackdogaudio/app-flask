@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card bg-base-100 shadow max-w-md mx-auto">
+  <div class="card-body">
+    <h2 class="card-title">Create an account</h2>
+    <form method="post" class="space-y-4">
+      <div class="form-control">
+        <label class="label"><span class="label-text">Username</span></label>
+        <input name="username" class="input input-bordered" required />
+      </div>
+      <div class="form-control">
+        <label class="label"><span class="label-text">Password</span></label>
+        <input type="password" name="password" class="input input-bordered" required />
+      </div>
+      <div class="card-actions justify-end">
+        <button class="btn btn-primary" type="submit">Register</button>
+      </div>
+    </form>
+    <p class="text-sm text-base-content/70">Already have an account? <a class="link" href="{{ url_for('login') }}">Login</a></p>
+  </div>
+</div>
+{% endblock %}
