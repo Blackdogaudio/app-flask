@@ -97,7 +97,7 @@
                 <p class="text-sm text-base-content/70">{{ item.description }}</p>
                 {% endif %}
                 {% if item.added_at %}
-                <p class="text-xs text-base-content/60 mt-1">Added {{ item.added_at }}</p>
+                <p class="text-xs text-base-content/60 mt-1">Added {{ item.added_at|date_only }}</p>
                 {% endif %}
                 {% if item.url %}
                 <a class="link" href="{{ item.url }}" target="_blank" rel="noopener">{{ 'View wishlist' if item.link_type == 'wishlist' else 'View link' }}</a>

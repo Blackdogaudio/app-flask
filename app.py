@@ -36,6 +36,34 @@ def extract_domain(url: str) -> str:
     except Exception:
         return url
 
+
+@app.template_filter('date_only')
+def jinja_date_only(value):
+    """Render only the date (YYYY-MM-DD) from an ISO8601 datetime string or datetime.
+
+    Safely handles values like '2025-11-26T14:10:32Z' or naive ISO strings.
+    If parsing fails, falls back to the first 10 characters or the original string.
+    """
+    if not value:
+        return ''
+    try:
+        if isinstance(value, str):
+            s = value
+            # Support trailing 'Z' by converting to +00:00 for fromisoformat
+            if s.endswith('Z'):
+                s = s[:-1] + '+00:00'
+            dt = datetime.fromisoformat(s)
+        elif isinstance(value, datetime):
+            dt = value
+        else:
+            return str(value)
+        return dt.date().isoformat()
+    except Exception:
+        try:
+            return str(value)[:10]
+        except Exception:
+            return str(value)
+
 ###############################################################################
 # Very simple JSON storage using ./db.json
 # We keep existing keys (like entries, meta) and add our own:
