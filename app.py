@@ -518,6 +518,7 @@ def delete_list(username, slug):
 
 
 @app.route('/browse')
+@login_required()
 def browse():
     db = _load_db()
     public_lists = []
