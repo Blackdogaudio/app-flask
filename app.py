@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, abort
+from flask import Flask, render_template, request, redirect, url_for, session, flash, abort, send_file
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import json
@@ -15,7 +15,7 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-change-me')
 # -----------------------------
 from urllib.parse import urlparse
 
-
+ADMIN_USERS = 'mark'
 
 @app.template_test('image_url')
 def is_image_url(url: str) -> bool:
@@ -209,6 +209,50 @@ def login_required(owner_check=False):
         return wrapper
 
     return decorator
+
+
+# -----------------------------
+# Admin helpers
+# -----------------------------
+def is_admin(username: str) -> bool:
+    """Return True if the given username is allowed to access admin pages.
+
+    Admin user list can be configured via env var ADMIN_USERS as a comma-separated
+    list of usernames. The username 'admin' is always considered an admin.
+    """
+    if not username:
+        return False
+    if username.lower() == 'admin':
+        return True
+    env_val = os.getenv('ADMIN_USERS', '')
+    if not env_val:
+        return False
+    allowed = {u.strip().lower() for u in env_val.split(',') if u.strip()}
+    return username.lower() in allowed
+
+
+def admin_required(fn):
+    """Decorator to require login and admin status."""
+    from functools import wraps
+
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        if 'username' not in session:
+            flash('Please log in to continue.', 'warning')
+            return redirect(url_for('login', next=request.path))
+        if not is_admin(session.get('username')):
+            abort(403)
+        return fn(*args, **kwargs)
+
+    return wrapper
+
+
+@app.context_processor
+def inject_helpers():
+    """Expose helper(s) to templates."""
+    return {
+        'is_admin': is_admin,
+    }
 
 ###############################################################################
 # Helpers for wishlist operations
@@ -563,6 +607,64 @@ def browse():
     # Sort by created_at or name
     public_lists.sort(key=lambda x: (x.get('username'), x.get('name').lower()))
     return render_template('browse.html', title='Browse Public Wishlists', lists=public_lists)
+
+
+###############################################################################
+# Admin: DB editor & download
+###############################################################################
+@app.get('/admin/db')
+@admin_required
+def admin_db_view():
+    """Show an admin-only page to view and edit the JSON database file."""
+    try:
+        with open(DB_PATH, 'r', encoding='utf-8') as f:
+            content = f.read()
+    except FileNotFoundError:
+        content = json.dumps({"users": [], "wishlists": {}, "meta": {"next_id": 1, "next_list_id": 1}}, indent=2)
+    return render_template('admin_db.html', title='Admin · DB Editor', content=content)
+
+
+@app.post('/admin/db')
+@admin_required
+def admin_db_save():
+    """Validate and save edited JSON, pretty-printed, atomically."""
+    raw = request.form.get('content', '')
+    if not raw:
+        flash('No content provided.', 'error')
+        return redirect(url_for('admin_db_view'))
+    try:
+        data = json.loads(raw)
+    except Exception as e:
+        flash(f'Invalid JSON: {e}', 'error')
+        return redirect(url_for('admin_db_view'))
+
+    # Write atomically: write to temp file, then replace
+    dir_name = os.path.dirname(DB_PATH)
+    tmp_path = os.path.join(dir_name, f'.db.json.tmp')
+    try:
+        with open(tmp_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2)
+            f.write('\n')
+        os.replace(tmp_path, DB_PATH)
+        flash('Database saved successfully.', 'success')
+    except Exception as e:
+        # Clean up tmp on failure
+        try:
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+        except Exception:
+            pass
+        flash(f'Failed to save database: {e}', 'error')
+    return redirect(url_for('admin_db_view'))
+
+
+@app.get('/admin/db/download')
+@admin_required
+def admin_db_download():
+    """Send the current db.json as a download."""
+    # Ensure the file exists
+    _load_db()
+    return send_file(DB_PATH, as_attachment=True, download_name='db.json', mimetype='application/json')
 
 ###############################################################################
 # Entrypoint

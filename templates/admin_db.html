@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="space-y-6">
+  <header class="flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-bold">Admin · DB Editor</h1>
+      <p class="text-sm text-base-content/70">Edit the contents of db.json below. Invalid JSON will be rejected.</p>
+    </div>
+    <div class="flex gap-2">
+      <a class="btn" href="{{ url_for('admin_db_download') }}">Download db.json</a>
+    </div>
+  </header>
+
+  <form method="post" action="{{ url_for('admin_db_save') }}" class="space-y-3">
+    <label class="label"><span class="label-text">db.json</span></label>
+    <textarea name="content" class="textarea textarea-bordered w-full font-mono" rows="24">{{ content }}</textarea>
+    <div class="flex items-center gap-2">
+      <button class="btn btn-primary" type="submit">Save</button>
+      <a class="btn btn-ghost" href="{{ url_for('home') }}">Cancel</a>
+    </div>
+  </form>
+
+  <div class="prose max-w-none">
+    <h3>Tips</h3>
+    <ul>
+      <li>Only admins can access this page. Set ADMIN_USERS env var to allow more admins (comma-separated), or log in as <code>admin</code>.</li>
+      <li>Changes take effect immediately after saving.</li>
+      <li>Consider downloading a backup before editing.</li>
+    </ul>
+  </div>
+</section>
+{% endblock %}
